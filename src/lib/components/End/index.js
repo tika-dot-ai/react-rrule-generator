@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Dropdown } from 'semantic-ui-react';
 import EndAfter from './After';
 import EndOnDate from './OnDate';
 
@@ -19,6 +20,12 @@ const End = ({
   const isOptionAvailable = option => !options.modes || options.modes.indexOf(option) !== -1;
   const isOptionSelected = option => mode === option;
 
+  const dropdownOptions = [
+    isOptionAvailable('Never') && { value: 'Never', text: translateLabel(translations, 'end.never') },
+    isOptionAvailable('After') && { value: 'After', text: translateLabel(translations, 'end.after') },
+    isOptionAvailable('On date') && { value: 'On date', text: translateLabel(translations, 'end.on_date') },
+  ].filter(Boolean);
+
   return (
     <div className="px-3">
       <div className="form-group row">
@@ -33,17 +40,27 @@ const End = ({
           </label>
         </div>
         <div className="col-sm-3">
-          <select
+          <Dropdown
             name="end.mode"
-            id={id}
-            className="form-control"
             value={mode}
-            onChange={handleChange}
-          >
-            {isOptionAvailable('Never') && <option value="Never">{translateLabel(translations, 'end.never')}</option>}
-            {isOptionAvailable('After') && <option value="After">{translateLabel(translations, 'end.after')}</option>}
-            {isOptionAvailable('On date') && <option value="On date">{translateLabel(translations, 'end.on_date')}</option>}
-          </select>
+            onChange={(_, { value, name }) => handleChange({ target: { name, value } })}
+            options={dropdownOptions}
+            selection
+          />
+
+          {
+            // <select
+            //   name="end.mode"
+            //   id={id}
+            //   className="form-control"
+            //   value={mode}
+            //   onChange={handleChange}
+            // >
+            //   {isOptionAvailable('Never') && <option value="Never">{translateLabel(translations, 'end.never')}</option>}
+            //   {isOptionAvailable('After') && <option value="After">{translateLabel(translations, 'end.after')}</option>}
+            //   {isOptionAvailable('On date') && <option value="On date">{translateLabel(translations, 'end.on_date')}</option>}
+            // </select>
+          }
         </div>
 
         {

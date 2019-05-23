@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Input } from 'semantic-ui-react';
 import numericalFieldHandler from '../../utils/numericalFieldHandler';
 import translateLabel from '../../utils/translateLabel';
 
@@ -12,11 +13,20 @@ const EndAfter = ({
   <div className="col-sm-4">
     <div className="form-group m-0 row d-flex align-items-center">
       <div className="col-3 col-sm-6 pl-0">
-        <input
+        {
+          // <input
+          //   id={id}
+          //   name="end.after"
+          //   aria-label="End after"
+          //   className="form-control"
+          //   value={after}
+          //   onChange={numericalFieldHandler(handleChange)}
+          // />
+        }
+        <Input
           id={id}
           name="end.after"
           aria-label="End after"
-          className="form-control"
           value={after}
           onChange={numericalFieldHandler(handleChange)}
         />
