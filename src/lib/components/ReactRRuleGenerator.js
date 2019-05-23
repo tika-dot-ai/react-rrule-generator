@@ -45,7 +45,6 @@ class ReactRRuleGenerator extends PureComponent {
     const newData = cloneDeep(this.state.data);
     set(newData, target.name, target.value);
     const rrule = computeRRuleToString(newData);
-
     this.setState({ data: newData });
     this.props.onChange(rrule);
   };

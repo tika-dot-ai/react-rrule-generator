@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Dropdown } from 'semantic-ui-react';
+
 import RepeatYearly from './Yearly/index';
 import RepeatMonthly from './Monthly/index';
 import RepeatWeekly from './Weekly/index';
@@ -24,6 +26,14 @@ const Repeat = ({
   const isOptionAvailable = option => !options.frequency || options.frequency.indexOf(option) !== -1;
   const isOptionSelected = option => frequency === option;
 
+  const repeatOptions = [
+    isOptionAvailable('Yearly') && { text: translateLabel(translations, 'repeat.yearly.label'), value: 'Yearly' },
+    isOptionAvailable('Monthly') && { text: translateLabel(translations, 'repeat.monthly.label'), value: 'Monthly' },
+    isOptionAvailable('Weekly') && { text: translateLabel(translations, 'repeat.weekly.label'), value: 'Weekly' },
+    isOptionAvailable('Daily') && { text: translateLabel(translations, 'repeat.daily.label'), value: 'Daily' },
+    isOptionAvailable('Hourly') && { text: translateLabel(translations, 'repeat.hourly.label'), value: 'Hourly' },
+  ].filter(Boolean);
+
   return (
     <div className="px-3">
       <div className="form-group row">
@@ -38,19 +48,14 @@ const Repeat = ({
           </label>
         </div>
         <div className="col-sm-6">
-          <select
+          <Dropdown
             name="repeat.frequency"
-            id={`${id}-frequency`}
-            className="form-control"
             value={frequency}
-            onChange={handleChange}
+            onChange={(e, { value, name }) => handleChange({ target: { value, name } })}
+            selection
+            options={repeatOptions}
           >
-            {isOptionAvailable('Yearly') && <option value="Yearly">{translateLabel(translations, 'repeat.yearly.label')}</option>}
-            {isOptionAvailable('Monthly') && <option value="Monthly">{translateLabel(translations, 'repeat.monthly.label')}</option>}
-            {isOptionAvailable('Weekly') && <option value="Weekly">{translateLabel(translations, 'repeat.weekly.label')}</option>}
-            {isOptionAvailable('Daily') && <option value="Daily">{translateLabel(translations, 'repeat.daily.label')}</option>}
-            {isOptionAvailable('Hourly') && <option value="Hourly">{translateLabel(translations, 'repeat.hourly.label')}</option>}
-          </select>
+          </Dropdown>
         </div>
       </div>
 
