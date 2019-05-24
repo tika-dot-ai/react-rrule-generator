@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Input } from 'semantic-ui-react';
 import numericalFieldHandler from '../../../utils/numericalFieldHandler';
 import translateLabel from '../../../utils/translateLabel';
 
@@ -16,11 +17,20 @@ const RepeatDaily = ({
       {translateLabel(translations, 'repeat.daily.every')}
     </div>
     <div className="col-sm-2">
-      <input
-        id={`${id}-interval`}
+      {
+        // <input
+        //   id={`${id}-interval`}
+        //   name="repeat.daily.interval"
+        //   aria-label="Repeat daily interval"
+        //   className="form-control"
+        //   value={interval}
+        //   onChange={numericalFieldHandler(handleChange)}
+        // />
+      }
+      <Input
+        style={{ maxWidth: 100 }}
         name="repeat.daily.interval"
         aria-label="Repeat daily interval"
-        className="form-control"
         value={interval}
         onChange={numericalFieldHandler(handleChange)}
       />
