@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { range } from 'lodash';
+import { Dropdown, Radio } from 'semantic-ui-react';
 
 import numericalFieldHandler from '../../../utils/numericalFieldHandler';
 import { MONTHS } from '../../../constants/index';
@@ -22,51 +23,102 @@ const RepeatYearlyOn = ({
     <div className={`form-group row d-flex align-items-sm-center ${!isActive && 'opacity-50'}`}>
       <div className="col-sm-1 offset-sm-2">
 
+        {
+          // hasMoreModes && (
+          //   <input
+          //     id={id}
+          //     type="radio"
+          //     name="repeat.yearly.mode"
+          //     aria-label="Repeat yearly on"
+          //     value="on"
+          //     checked={isActive}
+          //     onChange={handleChange}
+          //   />
+          // )
+        }
+
         {hasMoreModes && (
-          <input
-            id={id}
-            type="radio"
+          <Radio
+            label={translateLabel(translations, 'repeat.yearly.on')}
             name="repeat.yearly.mode"
             aria-label="Repeat yearly on"
             value="on"
             checked={isActive}
-            onChange={handleChange}
+            onChange={(_, { value, name }) => {
+              const target = { value, name };
+              handleChange({ target });
+            }}
           />
         )}
       </div>
 
-      <div className="col-sm-1">
-        {translateLabel(translations, 'repeat.yearly.on')}
-      </div>
+      {
+        // <div className="col-sm-1">
+        //   {translateLabel(translations, 'repeat.yearly.on')}
+        // </div>
+      }
 
       <div className="col-sm-2">
-        <select
-          id={`${id}-month`}
+        <Dropdown
+          value={on.month}
+          onChange={(e, { value, name }) => {
+            const target = { value, name };
+            handleChange({ target });
+          }}
+          options={MONTHS.map(month => ({
+            text: translateLabel(translations, `months.${month.toLowerCase()}`),
+            value: month,
+          }))}
+          selection
+          compact
+          disabled={!isActive}
           name="repeat.yearly.on.month"
           aria-label="Repeat yearly on month"
-          className="form-control"
-          value={on.month}
-          disabled={!isActive}
-          onChange={handleChange}
-        >
-          {MONTHS.map(month => <option key={month} value={month}>{translateLabel(translations, `months.${month.toLowerCase()}`)}</option>)}
-        </select>
+        />
+        {
+          // <select
+          //   id={`${id}-month`}
+          //   name="repeat.yearly.on.month"
+          //   aria-label="Repeat yearly on month"
+          //   className="form-control"
+          //   value={on.month}
+          //   disabled={!isActive}
+          //   onChange={handleChange}
+          // >
+          //   {MONTHS.map(month => <option key={month} value={month}>{translateLabel(translations, `months.${month.toLowerCase()}`)}</option>)}
+          // </select>
+        }
       </div>
 
       <div className="col-sm-2">
-        <select
-          id={`${id}-day`}
+        <Dropdown
+          value={on.day}
+          onChange={(e, { value, name }) => {
+            const target = { value, name };
+            numericalFieldHandler(handleChange)({ target });
+          }}
+          options={range(0, daysInMonth).map((i) => ({ text: i + 1, value: i + 1}))}
+          selection
+          compact
+          disabled={!isActive}
           name="repeat.yearly.on.day"
           aria-label="Repeat yearly on a day"
-          className="form-control"
-          value={on.day}
-          disabled={!isActive}
-          onChange={numericalFieldHandler(handleChange)}
-        >
-          {range(0, daysInMonth).map((i) => (
-            <option key={i} value={i + 1}>{i + 1}</option>
-          ))}
-        </select>
+        />
+        {
+          // <select
+          //   id={`${id}-day`}
+          //   name="repeat.yearly.on.day"
+          //   aria-label="Repeat yearly on a day"
+          //   className="form-control"
+          //   value={on.day}
+          //   disabled={!isActive}
+          //   onChange={numericalFieldHandler(handleChange)}
+          // >
+          //   {range(0, daysInMonth).map((i) => (
+          //     <option key={i} value={i + 1}>{i + 1}</option>
+          //   ))}
+          // </select>
+        }
       </div>
     </div>
   );
