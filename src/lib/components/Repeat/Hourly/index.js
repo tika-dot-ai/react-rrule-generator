@@ -1,47 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Input } from 'semantic-ui-react';
+import { Input, Form } from 'semantic-ui-react';
 import numericalFieldHandler from '../../../utils/numericalFieldHandler';
 import translateLabel from '../../../utils/translateLabel';
 
 const RepeatHourly = ({
-  id,
   hourly: {
     interval,
   },
   handleChange,
-  translations
+  translations,
 }) => (
-  <div className="form-group row d-flex align-items-sm-center">
-    <div className="col-sm-1 offset-sm-2">
-      {translateLabel(translations, 'repeat.hourly.every')}
-    </div>
-    <div className="col-sm-2">
-      {
-        // <input
-        //   id={`${id}-interval`}
-        //   name="repeat.hourly.interval"
-        //   aria-label="Repeat hourly interval"
-        //   className="form-control"
-        //   value={interval}
-        //   onChange={numericalFieldHandler(handleChange)}
-        // />
-      }
-      <Input
-        style={{ maxWidth: 100 }}
-        name="repeat.hourly.interval"
-        aria-label="Repeat hourly interval"
-        value={interval}
-        onChange={numericalFieldHandler(handleChange)}
-      />
-    </div>
-    <div className="col-sm-1">
-      {translateLabel(translations, 'repeat.hourly.hours')}
-    </div>
-  </div>
+  <Form.Field
+    inline
+    label={translateLabel(translations, 'repeat.hourly.every')}
+    control={() => (
+      <React.Fragment>
+        <Input
+          style={{ maxWidth: 100, marginRight: '1em' }}
+          name="repeat.hourly.interval"
+          aria-label="Repeat hourly interval"
+          value={interval}
+          onChange={numericalFieldHandler(handleChange)}
+        />
+        {translateLabel(translations, 'repeat.hourly.hours')}
+      </React.Fragment>
+    )}
+  />
 );
+
 RepeatHourly.propTypes = {
-  id: PropTypes.string.isRequired,
   hourly: PropTypes.shape({
     interval: PropTypes.number.isRequired,
   }).isRequired,

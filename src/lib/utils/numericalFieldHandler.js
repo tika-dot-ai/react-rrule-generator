@@ -1,4 +1,4 @@
-import { isNaN } from 'lodash';
+import isNaN from 'lodash.isnan';
 
 const numericalFieldHandler = callback => (event) => {
   // Convert input from a string to a number

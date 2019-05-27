@@ -1,4 +1,7 @@
-import { each, isFunction, isPlainObject, get } from 'lodash';
+import each from 'lodash.every';
+import isFunction from 'lodash.isfunction';
+import isPlainObject from 'lodash.isplainobject';
+import get from 'lodash.get';
 
 const replacePlaceholder = (text, replacements = {}) => {
   each(replacements, (value, key) => {

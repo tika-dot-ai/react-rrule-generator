@@ -12,7 +12,7 @@ const RepeatYearly = ({
     options,
   },
   handleChange,
-  translations
+  translations,
 }) => {
   const isTheOnlyOneMode = option => options.modes === option;
   const isOptionAvailable = option => !options.modes || isTheOnlyOneMode(option);

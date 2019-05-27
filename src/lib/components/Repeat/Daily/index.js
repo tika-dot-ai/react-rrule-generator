@@ -1,48 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Input } from 'semantic-ui-react';
+import { Input, Form } from 'semantic-ui-react';
 import numericalFieldHandler from '../../../utils/numericalFieldHandler';
 import translateLabel from '../../../utils/translateLabel';
 
 const RepeatDaily = ({
-  id,
   daily: {
     interval,
   },
   handleChange,
-  translations
+  translations,
 }) => (
-  <div className="form-group row d-flex align-items-sm-center">
-    <div className="col-sm-1 offset-sm-2">
-      {translateLabel(translations, 'repeat.daily.every')}
-    </div>
-    <div className="col-sm-2">
-      {
-        // <input
-        //   id={`${id}-interval`}
-        //   name="repeat.daily.interval"
-        //   aria-label="Repeat daily interval"
-        //   className="form-control"
-        //   value={interval}
-        //   onChange={numericalFieldHandler(handleChange)}
-        // />
-      }
-      <Input
-        style={{ maxWidth: 100 }}
-        name="repeat.daily.interval"
-        aria-label="Repeat daily interval"
-        value={interval}
-        onChange={numericalFieldHandler(handleChange)}
-      />
-    </div>
-    <div className="col-sm-1">
-      {translateLabel(translations, 'repeat.daily.days')}
-    </div>
-
-  </div>
+  <Form.Field
+    inline
+    label={translateLabel(translations, 'repeat.daily.every')}
+    control={() => (
+      <React.Fragment>
+        <Input
+          style={{ maxWidth: 100, marginRight: '1em' }}
+          name="repeat.daily.interval"
+          aria-label="Repeat daily interval"
+          value={interval}
+          onChange={numericalFieldHandler(handleChange)}
+        />
+        {translateLabel(translations, 'repeat.daily.days')}
+      </React.Fragment>
+    )}
+  />
 );
+
 RepeatDaily.propTypes = {
-  id: PropTypes.string.isRequired,
   daily: PropTypes.shape({
     interval: PropTypes.number.isRequired,
   }).isRequired,

@@ -1,19 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { toPairs } from 'lodash';
-import { Input, Button } from 'semantic-ui-react';
+import toPairs from 'lodash.topairs';
+import { Input, Button, Form } from 'semantic-ui-react';
 import numericalFieldHandler from '../../../utils/numericalFieldHandler';
 import translateLabel from '../../../utils/translateLabel';
 
 const RepeatWeekly = ({
-  id,
   weekly: {
     interval,
     days,
     options,
   },
   handleChange,
-  translations
+  translations,
 }) => {
   let daysArray = toPairs(days);
   if (options.weekStartsOnSunday) {
@@ -21,98 +20,56 @@ const RepeatWeekly = ({
   }
 
   return (
-    <div className="px-3">
-      <div className="form-group row d-flex align-items-sm-center">
-        <div className="col-sm-1 offset-sm-2">
-          {translateLabel(translations, 'repeat.weekly.every')}
-        </div>
-        <div className="col-sm-3">
-          {
-            // <input
-            //   id={`${id}-interval`}
-            //   name="repeat.weekly.interval"
-            //   aria-label="Repeat weekly interval"
-            //   className="form-control"
-            //   value={interval}
-            //   onChange={numericalFieldHandler(handleChange)}
-            // />
-          }
+    <div>
+      <Form.Field
+        inline
+        label={translateLabel(translations, 'repeat.weekly.every')}
+        control={() => (
+          <React.Fragment>
             <Input
-              style={{ maxWidth: 100 }}
+              style={{ maxWidth: 100, marginRight: '1em' }}
               name="repeat.weekly.interval"
               aria-label="Repeat weekly interval"
               value={interval}
               onChange={numericalFieldHandler(handleChange)}
             />
-        </div>
-        <div className="col-sm-1">
-          {translateLabel(translations, 'repeat.weekly.weeks')}
-        </div>
-      </div>
+            {translateLabel(translations, 'repeat.weekly.weeks')}
+          </React.Fragment>
+        )}
+      />
 
-      <div className="form-group row">
-        {
-          // <div className="btn-group btn-group-toggle offset-sm-2">
-          //   {daysArray.map(([dayName, isDayActive]) => (
-          //     <label
-          //       htmlFor={`${id}-${dayName}`}
-          //       key={dayName}
-          //       className={`btn btn-primary ${isDayActive ? 'active' : ''}`}
-          //     >
-          //       <input
-          //         type="checkbox"
-          //         id={`${id}-${dayName}`}
-          //         name={`repeat.weekly.days[${dayName}]`}
-          //         className="form-control"
-          //         checked={isDayActive}
-          //         onChange={(event) => {
-          //           const editedEvent = {
-          //             ...event,
-          //             target: {
-          //               ...event.target,
-          //               value: !isDayActive,
-          //               name: event.target.name,
-          //             },
-          //           };
+      <Form.Field
+        control={() => (
+          <Button.Group>
+            {
+              daysArray.map(([dayName, isDayActive]) => (
+                <Button
+                  key={dayName}
+                  active={isDayActive}
+                  name={`repeat.weekly.days[${dayName}]`}
+                  onClick={() => {
+                    const editedEvent = {
+                      target: {
+                        value: !isDayActive,
+                        name: `repeat.weekly.days[${dayName}]`,
+                      },
+                    };
 
-          //           handleChange(editedEvent);
-          //         }}
-          //       />
-          //       {translateLabel(translations, `days_short.${dayName.toLowerCase()}`)}
-          //     </label>))
-          //   }
-          // </div>
-        }
-
-        <Button.Group>
-          {
-            daysArray.map(([dayName, isDayActive]) => (
-              <Button
-                active={isDayActive}
-                name={`repeat.weekly.days[${dayName}]`}
-                onClick={() => {
-                  const editedEvent = {
-                    target: {
-                      value: !isDayActive,
-                      name: `repeat.weekly.days[${dayName}]`,
-                    },
-                  };
-
-                  handleChange(editedEvent);
-                }}
-              >
-                {translateLabel(translations, `days_short.${dayName.toLowerCase()}`)}
-              </Button>
-            ))
-          }
-        </Button.Group>
-      </div>
+                    handleChange(editedEvent);
+                  }}
+                >
+                  {translateLabel(translations, `days_short.${dayName.toLowerCase()}`)}
+                </Button>
+              ))
+            }
+          </Button.Group>
+        )}
+      />
     </div>
   );
 };
 
 RepeatWeekly.propTypes = {
-  id: PropTypes.string.isRequired,
   weekly: PropTypes.shape({
     interval: PropTypes.number.isRequired,
     days: PropTypes.shape({

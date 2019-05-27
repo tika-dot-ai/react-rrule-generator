@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Dropdown } from 'semantic-ui-react';
+import { Dropdown, Form } from 'semantic-ui-react';
 
 import RepeatYearly from './Yearly/index';
 import RepeatMonthly from './Monthly/index';
@@ -21,7 +21,7 @@ const Repeat = ({
     options,
   },
   handleChange,
-  translations
+  translations,
 }) => {
   const isOptionAvailable = option => !options.frequency || options.frequency.indexOf(option) !== -1;
   const isOptionSelected = option => frequency === option;
@@ -35,29 +35,20 @@ const Repeat = ({
   ].filter(Boolean);
 
   return (
-    <div className="px-3">
-      <div className="form-group row">
-        <div className="col-sm-2 text-sm-right">
-          <label
-            htmlFor={`${id}-frequency`}
-            className="col-form-label"
-          >
-            <strong>
-              {translateLabel(translations, 'repeat.label')}
-            </strong>
-          </label>
-        </div>
-        <div className="col-sm-6">
+    <Form>
+      <Form.Field
+        inline
+        label={translateLabel(translations, 'repeat.label')}
+        control={() => (
           <Dropdown
             name="repeat.frequency"
             value={frequency}
             onChange={(e, { value, name }) => handleChange({ target: { value, name } })}
             selection
             options={repeatOptions}
-          >
-          </Dropdown>
-        </div>
-      </div>
+          />
+        )}
+      />
 
       {
         isOptionSelected('Yearly') &&
@@ -105,7 +96,7 @@ const Repeat = ({
         />
       }
 
-    </div>
+    </Form>
   );
 };
 

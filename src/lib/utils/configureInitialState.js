@@ -1,5 +1,6 @@
 import moment from 'moment';
-import { isEmpty, uniqueId } from 'lodash';
+import isEmpty from 'lodash.isempty';
+import uniqueId from 'lodash.uniqueid';
 
 import computeRRuleToString from './computeRRule/toString/computeRRule';
 import { DATE_TIME_FORMAT } from '../constants/index';

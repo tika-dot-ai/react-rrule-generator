@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import TextareaAutosize from 'react-autosize-textarea';
+import {
+  Segment,
+  Header,
+  Container,
+  Form,
+  Dropdown,
+  Button,
+} from 'semantic-ui-react';
 
 import ReactRRuleGenerator, { translations } from '../lib';
 import './index.css';
@@ -13,10 +21,9 @@ class App extends Component {
     language: 'en',
   };
 
-  getTranslation = () => (this.state.language === 'de') ? translations.german : undefined;
+  getTranslation = () => ((this.state.language === 'de') ? translations.german : undefined);
 
   handleChangeLanguage = (event) => {
-    event.persist();
     const newLanguage = event.target.value;
     this.setState({ language: newLanguage });
   };
@@ -59,8 +66,9 @@ class App extends Component {
           Recurrence rules generator form built with React
         </div>
 
-        <div className="app container">
-          <h5><strong>{'<RRuleGenerator />'}</strong></h5>
+        <Container>
+          <span />
+          <Header as="h5">{'<RRuleGenerator />'}</Header>
 
           <ReactRRuleGenerator
             onChange={this.handleChange}
@@ -70,73 +78,62 @@ class App extends Component {
             }}
             translations={this.getTranslation()}
           />
-        </div>
+        </Container>
 
-        <hr className="mt-5 mb-5" />
+        <Container>
+          <span />
+          <Header as="h5">Example handling</Header>
+          <Segment>
+            <Form>
+              <Form.Field
+                inline
+                label="RRule"
+                control={() => (
+                  <TextareaAutosize
+                    className={`form-control rrule ${isCopied ? 'rrule-copied' : 'rrule-not-copied'}`}
+                    value={rrule}
+                    readOnly
+                  />
+                )}
+              />
 
-        <div className="container">
-          <h5><strong>Example handling</strong></h5>
-
-          <div className="px-3 pt-3 border rounded">
-            <div className="form-group row d-flex align-items-sm-center">
-
-              <div className="col-sm-2 text-sm-right">
-                <span className="col-form-label">
-                  <strong>
-                    RRule
-                  </strong>
-                </span>
-              </div>
-
-              <div className="col-sm-8">
-                <TextareaAutosize
-                  className={`form-control rrule ${isCopied ? 'rrule-copied' : 'rrule-not-copied'}`}
-                  value={rrule}
-                  readOnly
-                />
-              </div>
-
-              <div className="col-sm-2">
-                <CopyToClipboard
-                  text={rrule}
-                  onCopy={this.handleCopy}
+              <CopyToClipboard
+                text={rrule}
+                onCopy={this.handleCopy}
+              >
+                <Button
+                  aria-label="Copy generated RRule"
+                  primary={isCopied}
                 >
-                  <button
-                    aria-label="Copy generated RRule"
-                    className={`btn ${isCopied ? 'btn-secondary' : 'btn-primary'} float-right`}
-                  >
-                    {isCopied ? 'Copied' : 'Copy'}
-                  </button>
-                </CopyToClipboard>
-              </div>
+                  {isCopied ? 'Copied' : 'Copy'}
+                </Button>
+              </CopyToClipboard>
+            </Form>
+          </Segment>
 
-            </div>
-          </div>
-        </div>
-
-        <hr className="mt-5 mb-5" />
-
-        <div className="container mb-5">
-          <h5><strong>Config</strong></h5>
-          <div className="px-3 pt-3 border rounded">
-            <div className="form-group row d-flex align-items-sm-center">
-              <div className="col-sm-2 text-sm-right">
-                <span className="col-form-label">
-                  <strong>
-                    Language
-                  </strong>
-                </span>
-              </div>
-
-              <div className="col-sm-8">
-                <select className="form-control" value={this.state.language} onChange={this.handleChangeLanguage}>
-                  <option value="en">English</option>
-                  <option value="de">German</option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
+          <Header as="h5">Config</Header>
+          <Segment>
+            <Form>
+              <Form.Group>
+                <Form.Field
+                  inline
+                  label="Language"
+                  control={() => (
+                    <Dropdown
+                      value={this.state.language}
+                      onChange={(e, { value }) => this.handleChangeLanguage({ target: { value: value } })}
+                      options={[
+                        { text: 'English', value: 'en' },
+                        { text: 'German', value: 'de' },
+                      ]}
+                      selection
+                    />
+                  )}
+                />
+              </Form.Group>
+            </Form>
+          </Segment>
+        </Container>
       </div>
     );
   }

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Form } from 'semantic-ui-react';
 import StartOnDate from './OnDate';
 
 import translateLabel from '../../utils/translateLabel';
@@ -10,23 +11,17 @@ const Start = ({
     onDate,
   },
   handleChange,
-  translations
+  translations,
 }) => (
-  <div className="px-3">
-    <div className="form-group row">
-      <div className="col-sm-2 text-sm-right">
-        <label
-          htmlFor={id}
-          className="col-form-label"
-        >
-          <strong>
-            {translateLabel(translations, 'start.label')}
-          </strong>
-        </label>
-      </div>
-      <StartOnDate id={id} onDate={onDate} handleChange={handleChange} translations={translations} />
-    </div>
-  </div>
+  <Form>
+    <Form.Field
+      inline
+      label={translateLabel(translations, 'start.label')}
+      control={() => (
+        <StartOnDate id={id} onDate={onDate} handleChange={handleChange} translations={translations} />
+      )}
+    />
+  </Form>
 );
 
 Start.propTypes = {
