@@ -8,6 +8,10 @@ This forked project uses SemanticUI UI framework for form controls and markup in
 [![LICENSE](https://img.shields.io/npm/l/express.svg)](LICENSE)
 [![npm](https://img.shields.io/npm/dm/localeval.svg)](https://npm-stat.com/charts.html?package=react-rrule-generator)
 
+## Demo
+
+Check the demo [here](https://tika-dot-ai.github.io/react-rrule-generator-semantic/)
+
 ## Description
 
 This is [ReactJS](http://facebook.github.io/react/index.html) project based on [Create React Library](https://github.com/UdiliaInc/create-react-library) and using [SemanticUI](https://react.semantic-ui.com/) styling. It's built with the help of a great [rrule.js](https://github.com/jakubroztocil/rrule) library.
