@@ -1,6 +1,6 @@
 {
   "name": "react-rrule-generator-semantic",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Valerii Maltsev <valerii.maltsev@tika.ai>",
   "repository": {
     "type": "git",
@@ -19,7 +19,7 @@
   "bugs": {
     "url": "https://github.com/Fafruch/react-rrule-generator/issues"
   },
-  "homepage": "https://fafruch.github.io/react-rrule-generator",
+  "homepage": "https://tika-dot-ai.github.io/react-rrule-generator-semantic",
   "devDependencies": {
     "autoprefixer": "7.1.2",
     "babel-cli": "^6.26.0",

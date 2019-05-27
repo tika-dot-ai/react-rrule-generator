@@ -19,7 +19,7 @@ It also uses:
 
 ## Installation
 
-`npm install --save react-rrule-generator`
+`npm install --save react-rrule-generator-semantic`
 
 ## Usage 
 
