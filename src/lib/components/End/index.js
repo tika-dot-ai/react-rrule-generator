@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Dropdown, Form } from 'semantic-ui-react';
 import EndAfter from './After';
 import EndOnDate from './OnDate';
 
@@ -14,38 +15,35 @@ const End = ({
     options,
   },
   handleChange,
-  translations
+  translations,
 }) => {
   const isOptionAvailable = option => !options.modes || options.modes.indexOf(option) !== -1;
   const isOptionSelected = option => mode === option;
 
-  return (
-    <div className="px-3">
-      <div className="form-group row">
-        <div className="col-sm-2 text-sm-right">
-          <label
-            htmlFor={id}
-            className="col-form-label"
-          >
-            <strong>
-              {translateLabel(translations, 'end.label')}
-            </strong>
-          </label>
-        </div>
-        <div className="col-sm-3">
-          <select
-            name="end.mode"
-            id={id}
-            className="form-control"
-            value={mode}
-            onChange={handleChange}
-          >
-            {isOptionAvailable('Never') && <option value="Never">{translateLabel(translations, 'end.never')}</option>}
-            {isOptionAvailable('After') && <option value="After">{translateLabel(translations, 'end.after')}</option>}
-            {isOptionAvailable('On date') && <option value="On date">{translateLabel(translations, 'end.on_date')}</option>}
-          </select>
-        </div>
+  const dropdownOptions = [
+    isOptionAvailable('Never') && { value: 'Never', text: translateLabel(translations, 'end.never') },
+    isOptionAvailable('After') && { value: 'After', text: translateLabel(translations, 'end.after') },
+    isOptionAvailable('On date') && { value: 'On date', text: translateLabel(translations, 'end.on_date') },
+  ].filter(Boolean);
 
+  return (
+    <Form>
+      <Form.Group>
+        <Form.Field
+          inline
+          label={translateLabel(translations, 'end.label')}
+          control={() => (
+            <Dropdown
+              compact
+              name="end.mode"
+              value={mode}
+              onChange={(_, { value, name }) => handleChange({ target: { name, value } })}
+              options={dropdownOptions}
+              selection
+              style={{ minWidth: 100 }}
+            />
+          )}
+        />
         {
           isOptionSelected('After') &&
           <EndAfter
@@ -64,9 +62,8 @@ const End = ({
             translations={translations}
           />
         }
-
-      </div>
-    </div>
+      </Form.Group>
+    </Form>
   );
 };
 

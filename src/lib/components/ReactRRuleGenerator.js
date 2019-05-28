@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { cloneDeep, set } from 'lodash';
+import cloneDeep from 'lodash.clonedeep';
+import set from 'lodash.set';
+import { Message, Segment } from 'semantic-ui-react';
 
 import Start from './Start/index';
 import Repeat from './Repeat/index';
@@ -45,7 +47,6 @@ class ReactRRuleGenerator extends PureComponent {
     const newData = cloneDeep(this.state.data);
     set(newData, target.name, target.value);
     const rrule = computeRRuleToString(newData);
-
     this.setState({ data: newData });
     this.props.onChange(rrule);
   };
@@ -67,52 +68,50 @@ class ReactRRuleGenerator extends PureComponent {
 
         {
           !options.hideError && error && (
-            <div className="alert alert-danger">
+            <Message negative>
               {translateLabel(this.props.translations, 'invalid_rrule', { value: error.value })}
-            </div>
+            </Message>
           )
         }
 
-        <div className="px-0 pt-3 border rounded">
+        <Segment.Group>
 
           {
             !options.hideStart && (
-              <div>
+              <Segment>
                 <Start
                   id={`${id}-start`}
                   start={start}
                   handleChange={this.handleChange}
                   translations={this.props.translations}
                 />
-                <hr />
-              </div>
+              </Segment>
             )
           }
 
-          <div>
+          <Segment>
             <Repeat
               id={`${id}-repeat`}
               repeat={repeat}
               handleChange={this.handleChange}
               translations={this.props.translations}
             />
-          </div>
+          </Segment>
 
           {
             !options.hideEnd && (
-              <div>
-                <hr />
+              <Segment>
                 <End
                   id={`${id}-end`}
                   end={end}
                   handleChange={this.handleChange}
                   translations={this.props.translations}
                 />
-              </div>
+              </Segment>
             )
           }
 
-        </div>
+        </Segment.Group>
       </div>
     );
   }

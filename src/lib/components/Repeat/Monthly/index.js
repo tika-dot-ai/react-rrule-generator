@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Input, Form } from 'semantic-ui-react';
 import RepeatMonthlyOn from './On';
 import RepeatMonthlyOnThe from './OnThe';
 import numericalFieldHandler from '../../../utils/numericalFieldHandler';
@@ -15,31 +16,26 @@ const RepeatMonthly = ({
     options,
   },
   handleChange,
-  translations
+  translations,
 }) => {
   const isTheOnlyOneMode = option => options.modes === option;
   const isOptionAvailable = option => !options.modes || isTheOnlyOneMode(option);
 
   return (
     <div>
-      <div className="form-group row d-flex align-items-sm-center">
-        <div className="col-sm-1 offset-sm-2">
+      <Form.Field inline>
+        <label>
           {translateLabel(translations, 'repeat.monthly.every')}
-        </div>
-        <div className="col-sm-3">
-          <input
-            id={`${id}-interval`}
-            name="repeat.monthly.interval"
-            aria-label="Repeat monthly interval"
-            className="form-control"
-            value={interval}
-            onChange={numericalFieldHandler(handleChange)}
-          />
-        </div>
-        <div className="col-sm-1">
-          {translateLabel(translations, 'repeat.monthly.months')}
-        </div>
-      </div>
+        </label>
+        <Input
+          style={{ maxWidth: 100, marginRight: '1em' }}
+          name="repeat.monthly.interval"
+          aria-label="Repeat monthly interval"
+          value={interval}
+          onChange={numericalFieldHandler(handleChange)}
+        />
+        {translateLabel(translations, 'repeat.monthly.months')}
+      </Form.Field>
 
       {isOptionAvailable('on') && (
         <RepeatMonthlyOn

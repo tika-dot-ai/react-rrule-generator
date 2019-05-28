@@ -1,93 +1,109 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Dropdown, Radio, Form } from 'semantic-ui-react';
 
 import { MONTHS, DAYS } from '../../../constants/index';
 import translateLabel from '../../../utils/translateLabel';
 
 const RepeatYearlyOnThe = ({
-  id,
   mode,
   onThe,
   hasMoreModes,
   handleChange,
-  translations
+  translations,
 }) => {
   const isActive = mode === 'on the';
 
   return (
-    <div className={`form-group row d-flex align-items-sm-center ${!isActive && 'opacity-50'}`}>
-      <div className="col-sm-1 offset-sm-2">
-        {hasMoreModes && (
-          <input
-            id={id}
-            type="radio"
+    <Form.Group classnames={{ 'opacity-50': !isActive }}>
+      <Form.Field
+        control={() => hasMoreModes && (
+          <Radio
+            label={translateLabel(translations, 'repeat.yearly.on_the')}
             aria-label="Repeat yearly on the"
             name="repeat.yearly.mode"
             checked={isActive}
             value="on the"
-            onChange={handleChange}
+            onChange={(_, { value, name }) => {
+              const target = { value, name };
+              handleChange({ target });
+            }}
           />
         )}
-      </div>
-      <div className="col-sm-1">
-        {translateLabel(translations, 'repeat.yearly.on_the')}
-      </div>
+      />
 
-      <div className="col-sm-2">
-        <select
-          id={`${id}-which`}
-          name="repeat.yearly.onThe.which"
-          aria-label="Repeat yearly on the which"
-          className="form-control"
-          value={onThe.which}
-          disabled={!isActive}
-          onChange={handleChange}
-        >
-          <option value="First">{translateLabel(translations, 'numerals.first')}</option>
-          <option value="Second">{translateLabel(translations, 'numerals.second')}</option>
-          <option value="Third">{translateLabel(translations, 'numerals.third')}</option>
-          <option value="Fourth">{translateLabel(translations, 'numerals.fourth')}</option>
-          <option value="Last">{translateLabel(translations, 'numerals.last')}</option>
-        </select>
-      </div>
+      <Form.Field
+        control={() => hasMoreModes && (
+          <Dropdown
+            selection
+            compact
+            disabled={!isActive}
+            name="repeat.yearly.onThe.which"
+            aria-label="Repeat yearly on the which"
+            value={onThe.which}
+            onChange={(e, { value, name }) => {
+              const target = { value, name };
+              handleChange({ target });
+            }}
+            options={[
+              { value: "First", text: translateLabel(translations, 'numerals.first') },
+              { value: "Second", text: translateLabel(translations, 'numerals.second') },
+              { value: "Third", text: translateLabel(translations, 'numerals.third') },
+              { value: "Fourth", text: translateLabel(translations, 'numerals.fourth') },
+              { value: "Last", text: translateLabel(translations, 'numerals.last') },
+            ].filter(Boolean)}
+          />
+        )}
+      />
 
-      <div className="col-sm-3">
-        <select
-          id={`${id}-day`}
-          name="repeat.yearly.onThe.day"
-          aria-label="Repeat yearly on the day"
-          className="form-control"
-          value={onThe.day}
-          disabled={!isActive}
-          onChange={handleChange}
-        >
-          {DAYS.map(day => <option key={day} value={day}>{translateLabel(translations, `days.${day.toLowerCase()}`)}</option>)}
-        </select>
-      </div>
+      <Form.Field
+        control={() => hasMoreModes && (
+          <Dropdown
+            selection
+            compact
+            disabled={!isActive}
+            name="repeat.yearly.onThe.day"
+            aria-label="Repeat yearly on the day"
+            value={onThe.day}
+            onChange={(e, { value, name }) => {
+              const target = { value, name };
+              handleChange({ target });
+            }}
+            options={DAYS.map(day => ({
+              value: day,
+              text: translateLabel(translations, `days.${day.toLowerCase()}`),
+            }))}
+          />
+        )}
+      />
 
-      <div className="col-sm-1">
-          {translateLabel(translations, 'repeat.yearly.of')}
-      </div>
-
-      <div className="col-sm-2">
-        <select
-          id={`${id}-month`}
-          name="repeat.yearly.onThe.month"
-          aria-label="Repeat yearly on the month"
-          className="form-control"
-          value={onThe.month}
-          disabled={!isActive}
-          onChange={handleChange}
-        >
-          {MONTHS.map(month => <option key={month} value={month}>{translateLabel(translations, `months.${month.toLowerCase()}`)}</option>)}
-        </select>
-      </div>
-
-    </div>
+      <Form.Field
+        inline
+        label={translateLabel(translations, 'repeat.yearly.of')}
+        control={() => hasMoreModes && (
+          <Dropdown
+            selection
+            compact
+            disabled={!isActive}
+            name="repeat.yearly.onThe.month"
+            aria-label="Repeat yearly on the month"
+            value={onThe.month}
+            onChange={(e, { value, name }) => {
+              const target = { value, name };
+              handleChange({ target });
+            }}
+            options={MONTHS.map(month => ({
+              value: month,
+              text: translateLabel(translations, `months.${month.toLowerCase()}`),
+            }))}
+          />
+        )}
+      />
+    </Form.Group>
   );
 };
+
 RepeatYearlyOnThe.propTypes = {
-  id: PropTypes.string.isRequired,
   mode: PropTypes.oneOf(['on', 'on the']).isRequired,
   onThe: PropTypes.shape({
     which: PropTypes.oneOf(['First', 'Second', 'Third', 'Fourth', 'Last']).isRequired,

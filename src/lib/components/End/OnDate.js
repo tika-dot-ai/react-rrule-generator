@@ -1,83 +1,64 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import DateTime from 'react-datetime';
 import 'moment/min/locales';
+import DayPicker from 'react-day-picker';
+import { Popup, Button, Form } from 'semantic-ui-react';
 
 import { DATE_TIME_FORMAT } from '../../constants/index';
 import translateLabel from '../../utils/translateLabel';
 
 const EndOnDate = ({
-  id,
   onDate: {
     date,
     options,
   },
   handleChange,
-  translations
+  translations,
 }) => {
-  const CustomCalendar = options.calendarComponent;
-
+  const selectedDay = moment(date).toDate();
   const locale = options.weekStartsOnSunday ? 'en-ca' : 'en-gb';
-  const calendarAttributes = {
+  const dayPickerAttributes = {
     'aria-label': translateLabel(translations, 'end.tooltip'),
-    value: date,
-    dateFormat: DATE_TIME_FORMAT,
     locale,
-    readOnly: true,
+  };
+
+  const handleDayClick = (day) => {
+    const editedEvent = {
+      target: {
+        value: moment(day).format(DATE_TIME_FORMAT),
+        name: 'end.onDate.date',
+      },
+    };
+    handleChange(editedEvent);
   };
 
   return (
-    <div className="col-6 col-sm-3">
-      {
-        CustomCalendar
-          ? <CustomCalendar
-            key={`${id}-calendar`}
-            {...calendarAttributes}
-            onChange={(event) => {
-              const editedEvent = {
-                target: {
-                  value: event.target.value,
-                  name: 'end.onDate.date',
-                },
-              };
-
-              handleChange(editedEvent);
-            }}
-          />
-          : <DateTime
-            {...calendarAttributes}
-            inputProps={
-              {
-                id: `${id}-datetime`,
-                name: 'end.onDate.date',
-                readOnly: true,
-              }
-            }
-            locale={translateLabel(translations, 'locale')}
-            timeFormat={false}
-            viewMode="days"
-            closeOnSelect
-            closeOnTab
-            required
-            onChange={(inputDate) => {
-              const editedEvent = {
-                target: {
-                  value: moment(inputDate).format(DATE_TIME_FORMAT),
-                  name: 'end.onDate.date',
-                },
-              };
-
-              handleChange(editedEvent);
-            }}
-          />
-      }
-    </div>
+    <Form.Field
+      inline
+      control={() => (
+        <Popup
+          trigger={(
+            <Button>
+              {date}
+            </Button>
+          )}
+          content={(
+            <DayPicker
+              selectedDays={selectedDay}
+              onDayClick={handleDayClick}
+              {...dayPickerAttributes}
+              month={moment(date).toDate()}
+            />
+          )}
+          on="click"
+        />
+      )}
+    />
   );
 };
 
 EndOnDate.propTypes = {
-  id: PropTypes.string.isRequired,
   onDate: PropTypes.shape({
     date: PropTypes.string.isRequired,
     options: PropTypes.shape({
