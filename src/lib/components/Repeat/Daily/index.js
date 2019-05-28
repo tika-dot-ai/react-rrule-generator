@@ -11,22 +11,19 @@ const RepeatDaily = ({
   handleChange,
   translations,
 }) => (
-  <Form.Field
-    inline
-    label={translateLabel(translations, 'repeat.daily.every')}
-    control={() => (
-      <React.Fragment>
-        <Input
-          style={{ maxWidth: 100, marginRight: '1em' }}
-          name="repeat.daily.interval"
-          aria-label="Repeat daily interval"
-          value={interval}
-          onChange={numericalFieldHandler(handleChange)}
-        />
-        {translateLabel(translations, 'repeat.daily.days')}
-      </React.Fragment>
-    )}
-  />
+  <Form.Field inline>
+    <label>
+      {translateLabel(translations, 'repeat.daily.every')}
+    </label>
+    <Input
+      style={{ maxWidth: 100, marginRight: '1em' }}
+      name="repeat.daily.interval"
+      aria-label="Repeat daily interval"
+      value={interval}
+      onChange={numericalFieldHandler(handleChange)}
+    />
+    {translateLabel(translations, 'repeat.daily.days')}
+  </Form.Field>
 );
 
 RepeatDaily.propTypes = {

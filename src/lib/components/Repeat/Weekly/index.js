@@ -21,22 +21,19 @@ const RepeatWeekly = ({
 
   return (
     <div>
-      <Form.Field
-        inline
-        label={translateLabel(translations, 'repeat.weekly.every')}
-        control={() => (
-          <React.Fragment>
-            <Input
-              style={{ maxWidth: 100, marginRight: '1em' }}
-              name="repeat.weekly.interval"
-              aria-label="Repeat weekly interval"
-              value={interval}
-              onChange={numericalFieldHandler(handleChange)}
-            />
-            {translateLabel(translations, 'repeat.weekly.weeks')}
-          </React.Fragment>
-        )}
-      />
+      <Form.Field inline>
+        <label>
+          {translateLabel(translations, 'repeat.weekly.every')}
+        </label>
+        <Input
+          style={{ maxWidth: 100, marginRight: '1em' }}
+          name="repeat.weekly.interval"
+          aria-label="Repeat weekly interval"
+          value={interval}
+          onChange={numericalFieldHandler(handleChange)}
+        />
+        {translateLabel(translations, 'repeat.weekly.weeks')}
+      </Form.Field>
 
       <Form.Field
         control={() => (

@@ -23,22 +23,19 @@ const RepeatMonthly = ({
 
   return (
     <div>
-      <Form.Field
-        inline
-        label={translateLabel(translations, 'repeat.monthly.every')}
-        control={() => (
-          <React.Fragment>
-            <Input
-              style={{ maxWidth: 100, marginRight: '1em' }}
-              name="repeat.monthly.interval"
-              aria-label="Repeat monthly interval"
-              value={interval}
-              onChange={numericalFieldHandler(handleChange)}
-            />
-            {translateLabel(translations, 'repeat.monthly.months')}
-          </React.Fragment>
-        )}
-      />
+      <Form.Field inline>
+        <label>
+          {translateLabel(translations, 'repeat.monthly.every')}
+        </label>
+        <Input
+          style={{ maxWidth: 100, marginRight: '1em' }}
+          name="repeat.monthly.interval"
+          aria-label="Repeat monthly interval"
+          value={interval}
+          onChange={numericalFieldHandler(handleChange)}
+        />
+        {translateLabel(translations, 'repeat.monthly.months')}
+      </Form.Field>
 
       {isOptionAvailable('on') && (
         <RepeatMonthlyOn
