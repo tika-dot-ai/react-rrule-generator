@@ -9,14 +9,31 @@ import {
   Dropdown,
   Button,
 } from 'semantic-ui-react';
+import { RRule } from 'rrule';
 
 import ReactRRuleGenerator, { translations } from '../lib';
 import './index.css';
 import githubLogo from './github_logo.png';
 
+const rruleDayMap = {
+  1: RRule.MO,
+  2: RRule.TU,
+  3: RRule.WE,
+  4: RRule.TH,
+  5: RRule.FR,
+  6: RRule.SA,
+  7: RRule.SU,
+};
+
+const rrule = new RRule({
+  freq: RRule.WEEKLY,
+  interval: 1,
+  byweekday: [rruleDayMap[(new Date()).getDay()]],
+});
+
 class App extends Component {
   state = {
-    rrule: 'DTSTART:20190301T230000Z\nFREQ=YEARLY;BYMONTH=1;BYMONTHDAY=1',
+    rrule: rrule.toString(),
     isCopied: false,
     language: 'en',
   };
@@ -75,6 +92,7 @@ class App extends Component {
             value={this.state.rrule}
             config={{
               hideStart: false,
+              relativeDate: new Date(),
             }}
             translations={this.getTranslation()}
           />
