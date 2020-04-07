@@ -72,8 +72,8 @@ const RepeatMonthlyOnThe = ({
             selection
             compact
             disabled={!isActive}
-            name="repeat.monthly.onThe.which"
-            aria-label="Repeat monthly on the which"
+            name="repeat.monthly.onThe.day"
+            aria-label="Repeat monthly on the day"
           />
         )}
       />
